@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Failure Map: Crude Oil Cardiotoxicity in Large Predators</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --text-main: #c9d1d9;
+            --text-dim: #8b949e;
+            --accent-green: #3fb950;
+            --accent-yellow: #d29922;
+            --accent-red: #f85149;
+            --accent-blue: #58a6ff;
+            --border: #30363d;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 60px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: var(--accent-blue);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        .study-note {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-bottom: 50px;
+            font-style: italic;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        /* Failure Map Structure */
+        .map-wrapper {
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            width: 100%;
+            max-width: 1300px;
+            gap: 0;
+            margin-bottom: 80px;
+        }
+
+        .map-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 20%;
+            min-width: 200px;
+        }
+
+        .node-box {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px 15px;
+            width: 90%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .node-box:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-blue);
+        }
+
+        .icon-circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+            margin-bottom: 20px;
+            background-color: rgba(255,255,255,0.05);
+        }
+
+        .label {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+            width: 100%;
+            letter-spacing: 1px;
+        }
+
+        .content {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            color: var(--text-dim);
+        }
+
+        .content b {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-main);
+            font-size: 1rem;
+        }
+
+        .arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: bold;
+            padding: 0 15px;
+            color: var(--border);
+        }
+
+        /* Specific Node Accent Colors */
+        .node-box.variable .icon-circle { color: var(--accent-green); border-color: var(--accent-green); }
+        .node-box.system .icon-circle { color: var(--accent-blue); border-color: var(--accent-blue); }
+        .node-box.failure .icon-circle { color: var(--accent-yellow); border-color: var(--accent-yellow); }
+        .node-box.consequence .icon-circle { color: var(--accent-red); border-color: var(--accent-red); }
+        .node-box.solution .icon-circle { color: var(--accent-green); border-color: var(--accent-green); }
+
+        /* Routine Section */
+        .routine-container {
+            width: 100%;
+            max-width: 1000px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 35px;
+            background-color: var(--card-bg);
+        }
+
+        .routine-container h2 {
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            margin-top: 0;
+            color: var(--accent-green);
+            margin-bottom: 25px;
+            border-left: 4px solid var(--accent-green);
+            padding-left: 15px;
+        }
+
+        .routine-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .routine-item {
+            font-size: 0.9rem;
+            padding: 12px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 8px;
+            color: var(--text-dim);
+        }
+
+        .routine-item b {
+            color: var(--text-main);
+        }
+
+        .num {
+            font-weight: bold;
+            color: var(--accent-blue);
+            margin-right: 8px;
+        }
+
+        @media (max-width: 1000px) {
+            .map-wrapper { flex-direction: column; align-items: center; }
+            .map-node { width: 100%; margin-bottom: 30px; }
+            .arrow { transform: rotate(90deg); margin: 0 0 20px 0; }
+            .routine-list { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Failure Map: Crude Oil Cardiotoxicity</h1>
+    <p class="study-note">"Abnormalities in cardiac function were highly consistent, indicating a broadly conserved developmental crude oil cardiotoxicity." — PNAS Study</p>
+
+    <div class="map-wrapper">
+        <!-- 1. Altered Variable -->
+        <div class="map-node">
+            <div class="node-box variable">
+                <div class="icon-circle">📈</div>
+                <div class="label" style="color: var(--accent-green);">Altered Variable</div>
+                <div class="content">
+                    <b>Cardiac Homeostasis</b>
+                    The electrical signals (ion channels) that control the heart's rhythm.
+                </div>
+            </div>
+        </div>
+
+        <div class="arrow">➔</div>
+
+        <!-- 2. Affected System -->
+        <div class="map-node">
+            <div class="node-box system">
+                <div class="icon-circle">🐟</div>
+                <div class="label" style="color: var(--accent-blue);">Affected System</div>
+                <div class="content">
+                    <b>Large Predator Populations</b>
+                    Tunas, Amberjack, Swordfish, and Billfish in the Gulf habitats.
+                </div>
+            </div>
+        </div>
+
+        <div class="arrow">➔</div>
+
+        <!-- 3. Mechanism Failure -->
+        <div class="map-node">
+            <div class="node-box failure">
+                <div class="icon-circle">⚠️</div>
+                <div class="label" style="color: var(--accent-yellow);">Mechanism Failure</div>
+                <div class="content">
+                    <b>Developmental Cardiotoxicity</b>
+                    Oil chemicals block heart signals, causing severe <b>Bradycardia</b> and irregular beats.
+                </div>
+            </div>
+        </div>
+
+        <div class="arrow">➔</div>
+
+        <!-- 4. Consequence -->
+        <div class="map-node">
+            <div class="node-box consequence">
+                <div class="icon-circle">🌡️</div>
+                <div class="label" style="color: var(--accent-red);">Consequence</div>
+                <div class="content">
+                    <b>Pericardial Edema</b>
+                    Fluid builds up around the heart, leading to circulatory collapse and death.
+                </div>
+            </div>
+        </div>
+
+        <div class="arrow">➔</div>
+
+        <!-- 5. Possible Solution -->
+        <div class="map-node">
+            <div class="node-box solution">
+                <div class="icon-circle">❤️</div>
+                <div class="label" style="color: var(--accent-green);">Solution or Care</div>
+                <div class="content">
+                    <b>Population Recovery</b>
+                    Restoring habitats to protect the early life stages of these large predators.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="routine-container">
+        <h2>Thinking Routine (Scientific Insights)</h2>
+        <div class="routine-list">
+            <div class="routine-item"><span class="num">1.</span> <b>Broad Impact:</b> Cardiotoxicity is "broadly conserved" across many predatory fish species.</div>
+            <div class="routine-item"><span class="num">2.</span> <b>Species at Risk:</b> Bluefin Tuna, Yellowfin Tuna, and Greater Amberjack are most vulnerable.</div>
+            <div class="routine-item"><span class="num">3.</span> <b>Normal State:</b> Regular heart contractions allowing blood to reach developing organs.</div>
+            <div class="routine-item"><span class="num">4.</span> <b>The Event:</b> Spawning in oiled surface habitats during the Deepwater Horizon spill.</div>
+            <div class="routine-item"><span class="num">5.</span> <b>Key Finding:</b> Even low-level exposure disrupts the heart's electrical coupling.</div>
+            <div class="routine-item"><span class="num">6.</span> <b>Failure:</b> The heart cannot maintain its rhythm (Arrhythmia) or its speed (Bradycardia).</div>
+            <div class="routine-item"><span class="num">7.</span> <b>Direct:</b> Circulatory failure caused by high back-pressure and weak pumping.</div>
+            <div class="routine-item"><span class="num">8.</span> <b>Cascading Loss:</b> Massive loss of early life stages for Gulf predator populations.</div>
+            <div class="routine-item"><span class="num">9.</span> <b>Recovery:</b> Long-term monitoring of predator numbers and habitat health.</div>
+            <div class="routine-item"><span class="num">10.</span> <b>Homeostasis:</b> The oil disables the <b>Automatic</b> control of the heart rate. Because the heart (the effector) is poisoned, the body's <b>Negative Feedback</b> loops fail; they can no longer counteract the damage or return the system to its "normal" state, leading to a complete collapse of balance.</div>
+        </div>
+    </div>
+
+</body>
+</html>
